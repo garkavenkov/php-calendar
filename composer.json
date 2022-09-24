@@ -1,0 +1,19 @@
+{
+    "name": "garkavenkov/calendar",
+    "description": "Calendar",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Garkavenkov\\Calendar\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Maksim Garkavenkov",
+            "email": "maksim.garkavenkov@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

@@ -18,6 +18,10 @@ class Calendar
         } else {        
             $this->calendar_date = getdate();            
         }        
+        // print_r($this->calendar_date);
+        $this->calendar['info']['month']['index'] = $this->calendar_date['mon'];
+        $this->calendar['info']['month']['name'] = $this->calendar_date['month'];
+        $this->calendar['info']['year'] = $this->calendar_date['year'];
         
         // First day of month
         $this->first_day_of_month = getdate(mktime(0, 0, 0, $this->calendar_date['mon'], 1, $this->calendar_date['year']));

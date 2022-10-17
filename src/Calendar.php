@@ -42,11 +42,11 @@ class Calendar
         ];
     }
     
-    public function __construct(int $year = null, int $month = null, int $day=1, bool $week_begins_on_monday = true, string $lang = 'en')
+    public function __construct(int $year = null, int $month = null, bool $week_begins_on_monday = false, string $lang = 'en')
     {        
         // Date initialization
         if (!is_null($year) && !is_null($month)) {                         
-            $this->calendar_date = getdate(mktime(0, 0, 0, $month, $day, $year));
+            $this->calendar_date = getdate(mktime(0, 0, 0, $month, 1, $year));
         } else {        
             $this->calendar_date = getdate();            
         }        
@@ -55,7 +55,7 @@ class Calendar
         
         $this->localization = new Localization($lang);        
 
-        // Days' names                        
+        // Days' names
         $this->daysName($lang);
 
         // Months' names

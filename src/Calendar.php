@@ -117,8 +117,8 @@ class Calendar
             $this->calendar['weeks'][] = ['number' => $week_number, 'days' => $days] ;
             $days = [];
             $day_of_month = $end_of_week ;
-            $end_of_week = $day_of_month + 7;            
-        }        
+            $end_of_week = $day_of_month + 7;
+        }
     }
 
     private function daysName($lang) {

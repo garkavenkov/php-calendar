@@ -10,9 +10,8 @@ class Localization
     public function __construct($lang)
     {
         $file = __DIR__ . '/locale/'. $lang . '.php';
-        // echo __DIR__ . PHP_EOL;
-        if (file_exists($file)) {
-            // echo "File '$file' exists\n";            
+        
+        if (file_exists($file)) {        
             include('locale/'. $lang . '.php');
             if (isset($lang['months'])) {
                 $this->months = $lang['months'];
@@ -20,11 +19,7 @@ class Localization
             if (isset($lang['days'])) {
                 $this->days = $lang['days'];
             }
-        } 
-        // print_r($lang);
-        
-        
-        // print_r($this->months);
+        }         
     }
 
     public function getMonthName($name) {        

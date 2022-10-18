@@ -448,3 +448,105 @@ Array
         )
 )
 ```
+
+#### getCalendarInfo(string $dateFormat = null)
+
+This method returns an array containing basic information about calendar, i.e. month, year, calendar's  and month's boundries
+
+```php
+$info = $cal->getCalendarInfo();
+print_r($info);
+```
+output
+```
+Array
+(
+    [year] => 2022
+    [month] => Array
+        (
+            [index] => 10
+            [name] => Жовтень
+        )
+    [calendarBoundries] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2022-09-26
+                    [mday] => 26
+                    [wday] => 1
+                    [mon] => 9
+                    [year] => 2022
+                    [yday] => 268
+                    [weekday] => Понеділок
+                    [month] => Вересень
+                )
+            [1] => Array
+                (
+                    [date] => 2022-11-06
+                    [mday] => 6
+                    [wday] => 0
+                    [mon] => 11
+                    [year] => 2022
+                    [yday] => 309
+                    [weekday] => Неділя
+                    [month] => Листопад
+                )
+        )
+    [monthBoundries] => Array
+        (
+            [0] => Array
+                (
+                    [date] => 2022-10-01
+                    [mday] => 1
+                    [wday] => 6
+                    [mon] => 10
+                    [year] => 2022
+                    [yday] => 273
+                    [weekday] => Субота
+                    [month] => Жовтень
+                )
+            [1] => Array
+                (
+                    [date] => 2022-10-31
+                    [mday] => 31
+                    [wday] => 1
+                    [mon] => 10
+                    [year] => 2022
+                    [yday] => 303
+                    [weekday] => Понеділок
+                    [month] => Жовтень
+                )
+        )
+)
+```
+
+It is possible to output calendar's and month's boundries in particular format. To do this, you need to pass a parameter with the necessary format
+
+
+```php
+$info = $cal->getCalendarInfo(format: 'Y-m-d');
+print_r($info);
+```
+
+output
+```
+Array
+(
+    [year] => 2022
+    [month] => Array
+        (
+            [index] => 10
+            [name] => Жовтень
+        )
+    [calendarBoundries] => Array
+        (
+            [0] => 2022-09-26
+            [1] => 2022-11-06
+        )
+    [monthBoundries] => Array
+        (
+            [0] => 2022-10-01
+            [1] => 2022-10-31
+        )
+)
+```

@@ -246,4 +246,14 @@ class Calendar
             return $week['number'] == $number;
         });        
     }
+
+    public function getCalendarInfo(string $dateFormat = null): array
+    {        
+        return [
+            'year'  =>  $this->calendar['info']['year'],
+            'month' =>  $this->calendar['info']['month'],
+            'calendarBoundries' =>  $this->getCalendarBoundries($dateFormat),
+            'monthBoundries'    =>  $this->getMonthBoundries($dateFormat)
+        ];
+    }
 }

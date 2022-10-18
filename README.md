@@ -385,7 +385,7 @@ output
 
 #### getWeeksNumbers()
 
-This method returns calendar's weeks numbers.
+This method returns an array containing calendar's weeks numbers.
 
 ```php
 $numbers = $cal->getWeeksNumbers();
@@ -401,5 +401,50 @@ Array
     [3] => 42
     [4] => 43
     [5] => 44
+)
+```
+
+#### getWeek(int $number)
+
+This method returns an array containing calendar's week by number `$number`.
+
+```php
+$week = $cal->getWeek(40);
+print_r($week);
+```
+output
+```
+Array
+(
+    [1] => Array
+        (
+            [number] => 40
+            [days] => Array
+                (
+                    [0] => Array
+                        (
+                            [date] => 2022-10-03
+                            [mday] => 3
+                            [wday] => 1
+                            [mon] => 10
+                            [year] => 2022
+                            [yday] => 275
+                            [weekday] => Понеділок
+                            [month] => Жовтень
+                        )
+                   ...
+                    [6] => Array
+                        (
+                            [date] => 2022-10-09
+                            [mday] => 9
+                            [wday] => 0
+                            [mon] => 10
+                            [year] => 2022
+                            [yday] => 281
+                            [weekday] => Неділя
+                            [month] => Жовтень
+                        )
+                )
+        )
 )
 ```

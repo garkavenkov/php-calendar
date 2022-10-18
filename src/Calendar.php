@@ -232,11 +232,18 @@ class Calendar
         echo "\n";
     }
     
-    public function getWeeksNumbers()
+    public function getWeeksNumbers(): array
     {
         $numbers = array_map(function($week) {
             return $week['number'];
         },$this->calendar['weeks']);
         return $numbers;
+    }
+
+    public function getWeek(int $number): array
+    {
+        return array_filter($this->calendar['weeks'], function($week) use($number) {
+            return $week['number'] == $number;
+        });        
     }
 }

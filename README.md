@@ -382,3 +382,24 @@ output
         )
     ...
 ```
+
+#### getWeeksNumbers()
+
+This method returns calendar's weeks numbers.
+
+```php
+$numbers = $cal->getWeeksNumbers();
+print_r($numbers);
+```
+output
+```
+Array
+(
+    [0] => 39
+    [1] => 40
+    [2] => 41
+    [3] => 42
+    [4] => 43
+    [5] => 44
+)
+```

@@ -232,4 +232,11 @@ class Calendar
         echo "\n";
     }
     
+    public function getWeeksNumbers()
+    {
+        $numbers = array_map(function($week) {
+            return $week['number'];
+        },$this->calendar['weeks']);
+        return $numbers;
+    }
 }

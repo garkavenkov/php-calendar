@@ -550,3 +550,30 @@ Array
         )
 )
 ```
+
+#### getDay(string $date)
+
+This method returns an array containing particular day information
+
+```php
+$day = $cal->getDay('2022-10-22');
+print_r($day);
+```
+output
+
+```
+Array
+(
+    [0] => Array
+        (
+            [date] => 2022-10-22
+            [mday] => 22
+            [wday] => 6
+            [mon] => 10
+            [year] => 2022
+            [yday] => 294
+            [weekday] => Субота
+            [month] => Жовтень
+        )
+)
+```

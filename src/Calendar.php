@@ -256,4 +256,20 @@ class Calendar
             'monthBoundries'    =>  $this->getMonthBoundries($dateFormat)
         ];
     }
+
+    public function getDay(string $date): array
+    {
+        $calendar_days = [];
+
+        foreach ($this->calendar['weeks'] as $week) {
+            foreach($week['days'] as $day) {
+                array_push($calendar_days, $day);
+            }
+        }
+        $day = array_filter($calendar_days, function($day) use($date) {
+            return $day['date'] == $date;
+        });
+
+        return array_values($day);
+    }
 }

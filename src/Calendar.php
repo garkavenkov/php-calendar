@@ -5,14 +5,21 @@ namespace Garkavenkov\Calendar;
 use Garkavenkov\Calendar\Localization;
 
 class Calendar
-{    
-    private $calendar_date;
+{   
+    private $calendar = [];    
     private $first_day_of_month;
     private $last_day_of_month;    
-    private $calendar = [];
-    private $week_since_monday;    
+    private $week_since_monday;        
     private $localization = null;
    
+    /**
+     * Format calendar day
+     *
+     * @param integer $year     Calendar year
+     * @param integer $month    Calendar month
+     * @param integer $day      Calendar day
+     * @return void
+     */
     private function day(int $year, int $month, int $day)
     {
         [
@@ -42,13 +49,22 @@ class Calendar
         ];
     }
     
+    /**
+     * Constructor
+     *
+     * @param integer|null $year                Calendar year
+     * @param integer|null $month               Calendar month
+     * @param boolean $week_begins_on_monday    Week begins on Monday or Sunday
+     * @param string $lang                      Language string code, i.e. "ua"
+     */
     public function __construct(int $year = null, int $month = null, bool $week_begins_on_monday = false, string $lang = 'en')
-    {        
+    {   
         // Date initialization
+        $calendar_date = null;        
         if (!is_null($year) && !is_null($month)) {                         
-            $this->calendar_date = getdate(mktime(0, 0, 0, $month, 1, $year));
+            $calendar_date = getdate(mktime(0, 0, 0, $month, 1, $year));
         } else {        
-            $this->calendar_date = getdate();            
+            $calendar_date = getdate();            
         }        
 
         $this->week_since_monday = $week_begins_on_monday;
@@ -61,15 +77,15 @@ class Calendar
         // Months' names
         $this->monthsName($lang);
 
-        $this->calendar['info']['month']['index'] = $this->calendar_date['mon'];
-        $this->calendar['info']['month']['name'] = $this->localization->getMonthName($this->calendar_date['month']);
-        $this->calendar['info']['year'] = $this->calendar_date['year'];
+        $this->calendar['info']['month']['index'] = $calendar_date['mon'];
+        $this->calendar['info']['month']['name'] = $this->localization->getMonthName($calendar_date['month']);
+        $this->calendar['info']['year'] = $calendar_date['year'];
 
         // First day of month
-        $this->first_day_of_month = $this->day(year: $this->calendar_date['year'], month: $this->calendar_date['mon'], day: 1);
+        $this->first_day_of_month = $this->day(year: $calendar_date['year'], month: $calendar_date['mon'], day: 1);
         
         // Last day of month        
-        $this->last_day_of_month = $this->day(year: $this->calendar_date['year'], month: $this->calendar_date['mon']+1, day: 0);
+        $this->last_day_of_month = $this->day(year: $calendar_date['year'], month: $calendar_date['mon']+1, day: 0);
 
         // Month start and end days in week
         $month_starts_on = $this->first_day_of_month['wday'];
@@ -93,12 +109,12 @@ class Calendar
         $days = [];
         $day_of_month = 1;
         if ($rest_prev_month_days > 0) {
-            $week_number = date('W',mktime(0,0,0,$this->calendar_date['mon'], $this->first_day_of_month['mday'], $this->calendar_date['year']));
+            $week_number = date('W',mktime(0,0,0,$calendar_date['mon'], $this->first_day_of_month['mday'], $calendar_date['year']));
             for ($i = $rest_prev_month_days-1; $i>=0; $i--) {                
-                $days[] = $this->day(year: $this->calendar_date['year'], month: $this->calendar_date['mon'], day: -1 * $i);
+                $days[] = $this->day(year: $calendar_date['year'], month: $calendar_date['mon'], day: -1 * $i);
             }
             for ($i = 1; $i < (7-$rest_prev_month_days) + 1; $i++, $day_of_month++) {             
-                $days[] = $this->day(year: $this->calendar_date['year'], month: $this->calendar_date['mon'], day: $i);
+                $days[] = $this->day(year: $calendar_date['year'], month: $calendar_date['mon'], day: $i);
             }         
             $this->calendar['weeks'][] = ['number' => $week_number, 'days' => $days] ;
             $days = [];
@@ -108,10 +124,10 @@ class Calendar
         $end_of_week = $day_of_month + 7;           
         while($day_of_month <= $this->last_day_of_month['mday']) {
 
-            $week_number = date('W',mktime(0,0,0,$this->calendar_date['mon'], $day_of_month, $this->calendar_date['year']));
+            $week_number = date('W',mktime(0,0,0,$calendar_date['mon'], $day_of_month, $calendar_date['year']));
 
             for($i = $day_of_month; $i <$end_of_week; $i++) {                                
-                $days[] = $this->day(year: $this->calendar_date['year'], month: $this->calendar_date['mon'], day: $i);
+                $days[] = $this->day(year: $calendar_date['year'], month: $calendar_date['mon'], day: $i);
             }
             
             $this->calendar['weeks'][] = ['number' => $week_number, 'days' => $days] ;
@@ -121,7 +137,14 @@ class Calendar
         }
     }
 
-    private function daysName($lang) {
+    /**
+     * Generating the names of the days of the week.
+     *
+     * @param string $lang Language string code, i.e. "ua"
+     * @return void
+     */
+    private function daysName(string $lang)
+    {
         $week_begin = $this->week_since_monday ? "monday" : "sunday";        
         for ($i = 0; $i < 7; $i++) {                        
             $day = date("l", strtotime("last $week_begin +$i day"));
@@ -129,7 +152,13 @@ class Calendar
         }
     }
 
-    private function monthsName($lang)
+    /**
+     * Generate of month names
+     *
+     * @param string $lang Language string code, i.e. "ua"
+     * @return void
+     */
+    private function monthsName(string $lang)
     {
         for ($i = 1; $i <= 12; $i++) {
             $month = \DateTime::createFromFormat('!m', $i)->format('F');
@@ -137,12 +166,23 @@ class Calendar
         }
     }
 
-    public function get()
+    /**
+     * Return calendar
+     *
+     * @return array
+     */
+    public function get(): array
     {
         return $this->calendar;
     }
 
-    public function getMonthBoundries(string $format = null): array
+    /**
+     * Return month boundaries
+     *
+     * @param string|null $format
+     * @return array
+     */
+    public function getMonthBoundaries(string $format = null): array
     {
         if (!is_null($format)) {            
             return [                                
@@ -156,7 +196,13 @@ class Calendar
         ];    
     }
 
-    public function getCalendarBoundries(string $format = null): array
+    /**
+     * Return calendar boundaries
+     *
+     * @param string|null $format
+     * @return array
+     */
+    public function getCalendarBoundaries(string $format = null): array
     {
         $calendar_begin = $this->calendar['weeks'][0]['days'][0];
         $calendar_end   = $this->calendar['weeks'][count($this->calendar['weeks'])-1]['days'][6];
@@ -173,16 +219,33 @@ class Calendar
         ];
     }
     
-    public function getWeekdays()
+    /**
+     * Returns days' names
+     *
+     * @return array
+     */
+    public function getWeekdays(): array
     {
         return $this->calendar['info']['weekDayNames'];
     }
-
-    public function getMonths()
+    
+    /**
+     * Returns months' names
+     *
+     * @return array
+     */
+    public function getMonths(): array
     {
         return $this->calendar['info']['months'];
     }
 
+    /**
+     * Inject events into day
+     *
+     * @param string $title Events name
+     * @param array $events 
+     * @return void
+     */
     public function injectIntoDay(string $title, array $events)
     {        
         foreach ($this->calendar['weeks'] as &$week) {
@@ -198,6 +261,11 @@ class Calendar
         }        
     }    
 
+    /**
+     * Print to console calendar
+     *
+     * @return void
+     */
     public function print()
     {        
         $weekdays_length = array_map('mb_strlen',  $this->calendar['info']['weekDayNames']);
@@ -232,6 +300,11 @@ class Calendar
         echo "\n";
     }
     
+    /**
+     * Returns calendar's weeks' numbers
+     *
+     * @return array
+     */
     public function getWeeksNumbers(): array
     {
         $numbers = array_map(function($week) {
@@ -240,6 +313,12 @@ class Calendar
         return $numbers;
     }
 
+    /**
+     * Returns week by number
+     *
+     * @param integer $number
+     * @return array
+     */
     public function getWeek(int $number): array
     {
         return array_filter($this->calendar['weeks'], function($week) use($number) {
@@ -247,16 +326,28 @@ class Calendar
         });        
     }
 
+    /**
+     * Returns calendar basic information: year, month name, calendar and month boundaries
+     *
+     * @param string|null $dateFormat
+     * @return array
+     */
     public function getCalendarInfo(string $dateFormat = null): array
     {        
         return [
             'year'  =>  $this->calendar['info']['year'],
             'month' =>  $this->calendar['info']['month'],
-            'calendarBoundries' =>  $this->getCalendarBoundries($dateFormat),
-            'monthBoundries'    =>  $this->getMonthBoundries($dateFormat)
+            'calendarBoundries' =>  $this->getCalendarBoundaries($dateFormat),
+            'monthBoundries'    =>  $this->getMonthBoundaries($dateFormat)
         ];
     }
 
+    /**
+     * Returns the calendar's day.
+     *
+     * @param string $date Date in format 'Y-m-d'
+     * @return array
+     */
     public function getDay(string $date): array
     {
         $calendar_days = [];

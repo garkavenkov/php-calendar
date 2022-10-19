@@ -44,6 +44,7 @@ To get calendar use command:
 ```php
 $cldr = new Calendar(year: 2022, month: 10, week_begins_on_monday:true, lang: 'ua');
 $cal = $cldr->get();
+print_r($cal);
 ```
 
 The calendar has the following structure:
@@ -147,13 +148,14 @@ Array
 
 ## Methods
 
-#### getCalendarBoundries($format)
+#### getCalendarBoundaries($format)
 
 If you need to get calendar first and last day, use folowing code:
 
 ```php
 
-$boundries = $cal->getCalendarBoundries($format = null);
+$boundaries = $cal->getCalendarBoundaries($format = null);
+print_r($boundaries);
 ``` 
 This method returns an array of calendar start and end dates
 
@@ -191,7 +193,7 @@ You can pass $format variable into method.
 
 ```php
 
-$boundries = $cal->getCalendarBoundries('Y-m-d');
+$boundries = $cal->getCalendarBoundaries('Y-m-d');
 
 ``` 
 With this format methods will return array with formated date 
@@ -205,13 +207,13 @@ Array
 
 ```
 
-#### getMonthBoundries($format = null)
+#### getMonthBoundaries($format = null)
 
-Method `getMonthBoundries()` returns array with first and last day of the calendar month
+Method `getMonthBoundaries()` returns array with first and last day of the calendar month
 
 ```php
 
-$boundries = $cal->getMonthBoundries();
+$boundries = $cal->getMonthBoundaries();
 ```
 
 ```
@@ -244,11 +246,11 @@ Array
 )
 ```
 
-Likewise `getCalendarBoundries()` you can pass a `$format` variable to a method and get the formatted dates
+Likewise `getCalendarBoundaries()` you can pass a `$format` variable to a method and get the formatted dates
 
 ```php
 
-$boundries = $cal->getMonthBoundries('Y-m-d');
+$boundries = $cal->getMonthBoundaries('Y-m-d');
 ```
 
 ```

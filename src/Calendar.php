@@ -123,9 +123,10 @@ class Calendar
         // Rest weeks of the month
         $end_of_week = $day_of_month + 7;           
         while($day_of_month <= $this->last_day_of_month['mday']) {
-
-            $week_number = date('W',mktime(0,0,0,$calendar_date['mon'], $day_of_month, $calendar_date['year']));
-
+            $wn = date('W',mktime(0,0,0,$calendar_date['mon'], $day_of_month, $calendar_date['year']));                      
+            $week_number = $this->week_since_monday ? $wn : ++$wn;
+            if ($week_number == 53) $week_number = 1;
+            
             for($i = $day_of_month; $i <$end_of_week; $i++) {                                
                 $days[] = $this->day(year: $calendar_date['year'], month: $calendar_date['mon'], day: $i);
             }

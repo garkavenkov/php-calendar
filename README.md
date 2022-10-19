@@ -469,7 +469,7 @@ Array
             [index] => 10
             [name] => Жовтень
         )
-    [calendarBoundries] => Array
+    [calendarBoundaries] => Array
         (
             [0] => Array
                 (
@@ -494,7 +494,7 @@ Array
                     [month] => Листопад
                 )
         )
-    [monthBoundries] => Array
+    [monthBoundaries] => Array
         (
             [0] => Array
                 (
@@ -540,12 +540,12 @@ Array
             [index] => 10
             [name] => Жовтень
         )
-    [calendarBoundries] => Array
+    [calendarBoundaries] => Array
         (
             [0] => 2022-09-26
             [1] => 2022-11-06
         )
-    [monthBoundries] => Array
+    [monthBoundaries] => Array
         (
             [0] => 2022-10-01
             [1] => 2022-10-31

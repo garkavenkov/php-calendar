@@ -337,8 +337,8 @@ class Calendar
         return [
             'year'  =>  $this->calendar['info']['year'],
             'month' =>  $this->calendar['info']['month'],
-            'calendarBoundries' =>  $this->getCalendarBoundaries($dateFormat),
-            'monthBoundries'    =>  $this->getMonthBoundaries($dateFormat)
+            'calendarBoundaries' =>  $this->getCalendarBoundaries($dateFormat),
+            'monthBoundaries'    =>  $this->getMonthBoundaries($dateFormat)
         ];
     }
 
